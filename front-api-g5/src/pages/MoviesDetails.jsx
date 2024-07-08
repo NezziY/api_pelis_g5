@@ -25,11 +25,22 @@ const MovieDetails = () => {
 
   return (
     <div className="p-4">
+      <Link to={`/movies/`} className="text-blue-500 underline">
+        volver
+      </Link>
       <h1 className="text-2xl font-bold">{movie.title}</h1>
-      <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="rounded-lg w-full h-full object-cover" />
+      <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.title}
+        className="rounded-lg w-full h-full object-cover"
+      />
       <p>{movie.overview}</p>
-      <p><strong>Release Date:</strong> {movie.release_date}</p>
-      <p><strong>Rating:</strong> {movie.vote_average}</p>
+      <p>
+        <strong>Release Date:</strong> {movie.release_date}
+      </p>
+      <p>
+        <strong>Rating:</strong> {movie.vote_average}
+      </p>
     </div>
   );
 };
