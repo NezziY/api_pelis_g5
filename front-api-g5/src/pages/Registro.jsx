@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function registro() {
   return (
     <>
-      <div className="mt-7 ml-auto mr-auto w-96 backdrop-blur-lg bg-opacity-80 rounded-lg shadow-lg p-5 bg-gray-900 text-white">
+      <div className="mt-7 ml-auto mr-auto w-96 rounded-lg shadow-lg p-5 bg-gray-800 text-white">
         <h2 className="text-2xl font-bold pb-5">Registrarse</h2>
         <form>
           <div className="mb-4">

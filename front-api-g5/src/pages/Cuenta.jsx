@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Cuenta() {
   return (
     <>
-      <div className="ml-auto mr-auto mt-7 w-96 backdrop-blur-lg bg-opacity-80 rounded-lg shadow-lg p-5 bg-gray-900 text-white">
+      <div className="ml-auto mr-auto mt-7 w-96 rounded-lg shadow-lg p-5 bg-gray-800 text-white">
         <h2 className="text-2xl font-bold pb-5">Iniciar sesión</h2>
         <form>
           <div className="mb-4">
@@ -14,7 +14,7 @@ function Cuenta() {
               type="email"
               id="email"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
-              placeholder="andrew@mail.com"
+              placeholder="tuemail@mail.com"
               required
             />
           </div>
