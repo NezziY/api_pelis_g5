@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Reviews from "../components/Reviews"; // Importa el componente Reviews
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -26,10 +27,18 @@ const MovieDetails = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold">{movie.title}</h1>
-      <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="rounded-lg" style={{ minHeight: '300px', maxHeight: '300px' }}  />
+      <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.title}
+        className="rounded-lg"
+        style={{ minHeight: "300px", maxHeight: "300px" }}
+      />
       <p>{movie.overview}</p>
       <p><strong>Release Date:</strong> {movie.release_date}</p>
       <p><strong>Rating:</strong> {movie.vote_average}</p>
+
+      {/* Agrega el componente Reviews con movieId como prop */}
+      <Reviews movieId={movie.id} />
     </div>
   );
 };
