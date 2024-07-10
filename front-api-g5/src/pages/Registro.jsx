@@ -1,13 +1,51 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
+function Registro() {
+  const [datos, setDatos] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    password: "",
+    confirmarPassword: "",
+  });
 
+  const { nombre, apellido, email, password, confirmarPassword } = datos;
 
-function registro() {
+  const handleInputChange = (e) => {
+    setDatos({
+      ...datos,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const enviarDatos = (e) => {
+    e.preventDefault();
+
+    const datosUsuario = {
+      nombre: nombre,
+      apellido: apellido,
+      email: email,
+      password: password,
+      confirmarPassword: confirmarPassword,
+    };
+    console.log(datosUsuario);
+    axios
+      .post("http://localhost:5000/registro", datosUsuario)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <div className="mt-7 ml-auto mr-auto w-96 rounded-lg shadow-lg p-5 bg-gray-800 text-white">
         <h2 className="text-2xl font-bold pb-5">Registrarse</h2>
-        <form id="formRegistro">
+        <form id="formRegistro" onSubmit={enviarDatos}>
           <div className="mb-4">
             <label
               htmlFor="nombreUser"
@@ -20,6 +58,7 @@ function registro() {
               id="nombreUser"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="Nombre"
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -35,6 +74,7 @@ function registro() {
               id="apellidoUser"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="Apellido"
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -45,6 +85,7 @@ function registro() {
             <input
               type="email"
               id="email"
+              onChange={handleInputChange}
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="ejemplo@tumail.com"
               required
@@ -60,6 +101,7 @@ function registro() {
             <input
               type="password"
               id="password"
+              onChange={handleInputChange}
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="*********"
               required
@@ -67,14 +109,15 @@ function registro() {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="secondPassword"
+              htmlFor="confirmarPassword"
               className="block mb-2 text-sm font-medium"
             >
               Repite tu contraseña
             </label>
             <input
               type="password"
-              id="secondPassword"
+              id="confirmarPassword"
+              onChange={handleInputChange}
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="*********"
               required
@@ -86,6 +129,8 @@ function registro() {
           <div className="flex flex-col items-center justify-between mb-4">
             <button
               type="submit"
+              id="btnRegistro"
+              name="btnRegistro"
               className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full"
             >
               Registrarme
@@ -105,4 +150,4 @@ function registro() {
   );
 }
 
-export default registro;
+export default Registro;
