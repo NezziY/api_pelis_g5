@@ -5,47 +5,43 @@ import { useState } from "react";
 function Registro() {
   const [datos, setDatos] = useState({
     nombre: "",
-    apellido: "",
     email: "",
     password: "",
     confirmarPassword: "",
   });
 
-  const { nombre, apellido, email, password, confirmarPassword } = datos;
+  const { nombre, email, password, confirmarPassword } = datos;
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (event) => {
     setDatos({
       ...datos,
-      [e.target.id]: e.target.value,
+      [event.target.id]: event.target.value,
     });
   };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const enviarDatos = (e) => {
-    e.preventDefault();
+    if (password !== confirmarPassword) {
+      console.log("Las contraseñas no coinciden");
+      return;
+    }
 
-    const datosUsuario = {
-      nombre: nombre,
-      apellido: apellido,
-      email: email,
-      password: password,
-      confirmarPassword: confirmarPassword,
-    };
-    console.log(datosUsuario);
-    axios
-      .post("http://localhost:5000/registro", datosUsuario)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:5173/registro",
+        datos
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
       <div className="mt-7 ml-auto mr-auto w-96 rounded-lg shadow-lg p-5 bg-gray-800 text-white">
         <h2 className="text-2xl font-bold pb-5">Registrarse</h2>
-        <form id="formRegistro" onSubmit={enviarDatos}>
+        <form id="formRegistro" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="nombreUser"
