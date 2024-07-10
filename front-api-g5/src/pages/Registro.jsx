@@ -1,30 +1,38 @@
 import { Link } from "react-router-dom";
 
+
+
 function registro() {
   return (
     <>
       <div className="mt-7 ml-auto mr-auto w-96 rounded-lg shadow-lg p-5 bg-gray-800 text-white">
         <h2 className="text-2xl font-bold pb-5">Registrarse</h2>
-        <form>
+        <form id="formRegistro">
           <div className="mb-4">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium">
+            <label
+              htmlFor="nombreUser"
+              className="block mb-2 text-sm font-medium"
+            >
               Nombre
             </label>
             <input
               type="text"
-              id="name"
+              id="nombreUser"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="Nombre"
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium">
+            <label
+              htmlFor="apellidoUser"
+              className="block mb-2 text-sm font-medium"
+            >
               Apellido
             </label>
             <input
               type="text"
-              id="name"
+              id="apellidoUser"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="Apellido"
               required
@@ -59,14 +67,14 @@ function registro() {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="password"
+              htmlFor="secondPassword"
               className="block mb-2 text-sm font-medium"
             >
               Repite tu contraseña
             </label>
             <input
               type="password"
-              id="password"
+              id="secondPassword"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="*********"
               required
@@ -91,6 +99,8 @@ function registro() {
           </div>
         </form>
       </div>
+      {/* mensajes de error  */}
+      <div id="mensajeError" className="hidden"></div>
     </>
   );
 }
