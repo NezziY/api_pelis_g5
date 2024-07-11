@@ -14,7 +14,7 @@ const Comment = db.define("Comment", {
   created_at: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-    field: 'created_at',  // Nombre correcto del campo en la base de datos
+    field: 'created_at',
   },
   user_id: {
     type: DataTypes.INTEGER,
@@ -39,7 +39,7 @@ const Comment = db.define("Comment", {
   },
 }, {
   tableName: 'comments',
-  timestamps: false, 
+  timestamps: false,
 });
 
 module.exports = Comment;
