@@ -35,7 +35,6 @@ const createComment = async (req, res) => {
             user_id,
             movie_id,
             series_id,
-            created_at: new Date(),
         });
         res.status(201).json(newComment);
     } catch (error) {
