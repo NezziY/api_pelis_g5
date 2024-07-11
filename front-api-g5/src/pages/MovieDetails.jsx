@@ -6,6 +6,7 @@ import Reviews from "../components/Reviews"; // Importa el componente Reviews
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const userId = "01";
 
   useEffect(() => {
     axios
@@ -38,7 +39,7 @@ const MovieDetails = () => {
       <p><strong>Rating:</strong> {movie.vote_average}</p>
 
       {/* Agrega el componente Reviews con movieId como prop */}
-      <Reviews movieId={movie.id} />
+      <Reviews movieId={movie.id} userId={userId} />
     </div>
   );
 };
