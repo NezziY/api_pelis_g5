@@ -7,6 +7,7 @@ function Cuenta() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,13 +18,20 @@ function Cuenta() {
       });
 
       if (response.data.success) {
-        window.location.href = "/conected";
-        console.log("Usuario existe");
+        // Guardar solo los datos relevantes del usuario en sessionStorage
+        const userData = {
+          username: response.data.user.username,
+          email: response.data.user.email,
+          // Agregar otros campos si es necesario
+        };
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        window.location.href = "/conected"; // Redirigir al usuario después del inicio de sesión
       } else {
-        console.log("Usuario no existe o la contraseña es incorrecta");
+        setError(response.data.message); // Mostrar mensaje de error del servidor
       }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+      setError("Error al iniciar sesión. Por favor, inténtelo de nuevo.");
     }
   };
 
@@ -44,6 +52,7 @@ function Cuenta() {
             id="email"
             className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
             placeholder="tuemail@mail.com"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -66,6 +75,7 @@ function Cuenta() {
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -80,9 +90,8 @@ function Cuenta() {
           </div>
         </div>
 
-        <div>
-          <p className="text-red-500 pb-5"></p>
-        </div>
+        {error && <p className="text-red-500 pb-5">{error}</p>}
+
         <div className="flex flex-col items-center justify-between mb-4">
           <button
             type="submit"
@@ -91,7 +100,7 @@ function Cuenta() {
             Conectarse
           </button>
           <div className="flex items-center text-sm mt-3">
-            <p>Quieres crear una cuenta?</p>
+            <p>¿Quieres crear una cuenta?</p>
             <Link to={`/registro/`} className="underline cursor-pointer ml-1">
               Registrarse
             </Link>
