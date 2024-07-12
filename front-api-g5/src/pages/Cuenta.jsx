@@ -73,7 +73,9 @@ function Cuenta() {
                 placeholder="Contraseña"
                 className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
                 // value={palabraMagica}
-                // onChange={handleInputChange}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
               <label className="label mt-2">
                 <Link
