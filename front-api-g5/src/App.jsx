@@ -10,6 +10,7 @@ import SeriesDetails from "./pages/SeriesDetails";
 import Series from "./pages/Series";
 import Video from "./pages/Video";
 import NotFound from "./pages/NotFound";
+import Conected from "./pages/Conected";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/series/:id" element={<SeriesDetails />} />
           <Route path="/series" element={<Series />} />
           <Route path="/video" element={<Video />} />
+          <Route path="/conected" element={<Conected />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
