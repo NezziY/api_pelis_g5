@@ -19,11 +19,11 @@ const Navbar = () => {
               Películas
             </Link>
           </li>
-          <li className="ml-6">
+          {/* <li className="ml-6">
             <Link to="/favoritos" className="text-white">
               Favoritos
             </Link>
-          </li>
+          </li> */}
           <li className="ml-6">
             <Link to="/cuenta" className="text-white">
               Mi Cuenta

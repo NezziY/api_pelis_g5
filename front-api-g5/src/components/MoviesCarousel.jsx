@@ -67,7 +67,7 @@ function MoviesCarousel() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <input
           type="text"
           value={searchTerm}
@@ -87,8 +87,8 @@ function MoviesCarousel() {
             </option>
           ))}
         </select>
-      </div>
-      <div className="slider-container">
+      </div> */}
+      <div className="slider-container mt-16">
         <Slider {...settings}>
           {movies.map((movie) => (
             <div key={movie.id}>
