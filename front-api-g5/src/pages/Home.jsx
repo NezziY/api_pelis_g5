@@ -5,7 +5,7 @@ import MoviesCarousel from "../components/MoviesCarousel";
 
 function Home() {
   return (
-    <div className="bg-slate-50 text-slate-950">
+    <div>
       <Carousel />
       <MoviesCarousel />
       <SeriesCarousel />

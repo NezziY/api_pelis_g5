@@ -67,9 +67,28 @@ function MoviesCarousel() {
 
   return (
     <div>
-      
-      <div className="slider-container my-8">
-        <h3 className='text-3xl font-bold text-center my-4'>Películas</h3>
+      <div>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          placeholder="Filtro por nombre..."
+        />
+      </div>
+      <div>
+        <select
+          value={selectedGenre}
+          onChange={(event) => setSelectedGenre(event.target.value)}
+        >
+          <option value="">Selecciona un género</option>
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="slider-container">
         <Slider {...settings}>
           {movies.map((movie) => (
             <div key={movie.id}>

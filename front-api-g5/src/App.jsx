@@ -1,17 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Cuenta from './pages/Cuenta';
-import Favoritos from './pages/Favoritos';
-import Movies from './pages/Movies';
-import Recuperar from './pages/Recuperar';
-import Registro from './pages/Registro';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom/";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Cuenta from "./pages/Cuenta";
+import Favoritos from "./pages/Favoritos";
+import Movies from "./pages/Movies";
+import Recuperar from "./pages/Recuperar";
+import Registro from "./pages/Registro";
 import SeriesDetails from "./pages/SeriesDetails";
-import Series from './pages/Series';
-import Video from './pages/Video';
-import NotFound from './pages/NotFound';
-import MovieDetails from './pages/MovieDetails';
+import Series from "./pages/Series";
+import Video from "./pages/Video";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -29,12 +27,11 @@ const App = () => {
           <Route path="/series/:id" element={<SeriesDetails />} />
           <Route path="/series" element={<Series />} />
           <Route path="/video" element={<Video />} />
-          <Route path="/movies/:id" element={<MovieDetails />} /> 
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
   );
-}
+};
 
 export default App;

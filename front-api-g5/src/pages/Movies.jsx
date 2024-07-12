@@ -29,7 +29,7 @@ const Movies = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Now Playing Movies</h1>
+      <h1 className="text-2xl font-bold mb-4">Lo último en Películas</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {movies.map((movie) => (
           <Link to={`/movies/${movie.id}`} key={movie.id}>
