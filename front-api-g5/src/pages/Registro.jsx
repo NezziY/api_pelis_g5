@@ -1,39 +1,50 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
 
 function Registro() {
-  const [datos, setDatos] = useState({
-    nombre: "",
-    email: "",
-    password: "",
-    confirmarPassword: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const { nombre, email, password, confirmarPassword } = datos;
-
-  const handleInputChange = (event) => {
-    setDatos({
-      ...datos,
-      [event.target.id]: event.target.value,
-    });
-  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmarPassword) {
-      console.log("Las contraseñas no coinciden");
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden");
       return;
     }
 
+    // Preparar datos para enviar
+    const userData = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
     try {
+      // Enviar datos a la API
       const response = await axios.post(
-        "http://localhost:5173/registro",
-        datos
+        "http://localhost:3030/api/users",
+        userData
       );
-      console.log(response.data);
+
+      if (response.status === 201) {
+        // Registro exitoso
+        alert("Usuario registrado con éxito");
+        // Redirigir o limpiar formulario
+      } else {
+        setErrorMessage("Error en el registro, intente de nuevo");
+      }
     } catch (error) {
-      console.error(error);
+      // Mostrar error específico del servidor si está disponible
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Error en el registro, intente de nuevo"
+      );
     }
   };
 
@@ -54,26 +65,12 @@ function Registro() {
               id="nombreUser"
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="Nombre"
-              onChange={handleInputChange}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="apellidoUser"
-              className="block mb-2 text-sm font-medium"
-            >
-              Apellido
-            </label>
-            <input
-              type="text"
-              id="apellidoUser"
-              className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
-              placeholder="Apellido"
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 text-sm font-medium">
               Email
@@ -81,9 +78,10 @@ function Registro() {
             <input
               type="email"
               id="email"
-              onChange={handleInputChange}
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="ejemplo@tumail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -97,9 +95,10 @@ function Registro() {
             <input
               type="password"
               id="password"
-              onChange={handleInputChange}
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="*********"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -113,14 +112,17 @@ function Registro() {
             <input
               type="password"
               id="confirmarPassword"
-              onChange={handleInputChange}
               className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
               placeholder="*********"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
           <div>
-            <p className="text-red-500 pb-5"></p>
+            {errorMessage && (
+              <p className="text-red-500 pb-5">{errorMessage}</p>
+            )}
           </div>
           <div className="flex flex-col items-center justify-between mb-4">
             <button
@@ -140,7 +142,6 @@ function Registro() {
           </div>
         </form>
       </div>
-      {/* mensajes de error  */}
       <div id="mensajeError" className="hidden"></div>
     </>
   );
