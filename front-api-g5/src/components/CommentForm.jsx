@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CommentForm = ({ movieId, userId, seriesId }) => {
+const CommentForm = ({ movieId, seriesId, userId, type }) => {
   const [commentText, setCommentText] = useState('');
 
   const handleSubmit = async (event) => {
@@ -10,8 +10,9 @@ const CommentForm = ({ movieId, userId, seriesId }) => {
       await axios.post('http://localhost:3030/api/comments', {
         comment_text: commentText,
         user_id: userId,
-        movie_id: movieId,
-        series_id: seriesId
+        movie_id: type === 'movie' ? movieId : null,
+        series_id: type === 'series' ? seriesId : null,
+        comment_type: type
       });
       alert('Comentario creado exitosamente');
       setCommentText('');
@@ -24,7 +25,7 @@ const CommentForm = ({ movieId, userId, seriesId }) => {
   return (
     <form onSubmit={handleSubmit}>
       <textarea
-      className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 '
+        className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 '
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
         placeholder="Escribe tu comentario aquí"

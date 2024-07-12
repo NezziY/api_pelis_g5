@@ -29,14 +29,24 @@ const getCommentById = async (req, res) => {
 // crear un comentario
 const createComment = async (req, res) => {
     try {
-        const { comment_text, user_id, movie_id, series_id } = req.body;
+        const { comment_text, user_id, movie_id, series_id, comment_type } = req.body;
+
+        if (comment_type === 'movie' && !movie_id) {
+            return res.status(400).json({ error: 'movie_id es requerido para comentarios de películas' });
+        }
+
+        if (comment_type === 'series' && !series_id) {
+            return res.status(400).json({ error: 'series_id es requerido para comentarios de series' });
+        }
+
         const newComment = await Comment.create({
             comment_text,
             user_id,
-            movie_id,
-            series_id,
-            created_at: new Date(),
+            movie_id: comment_type === 'movie' ? movie_id : null,
+            series_id: comment_type === 'series' ? series_id : null,
+            comment_type,
         });
+
         res.status(201).json(newComment);
     } catch (error) {
         res.status(500).json({ error: error.message });
