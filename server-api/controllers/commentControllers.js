@@ -64,14 +64,14 @@ const updateComment = async (req, res) => {
             return res.status(404).json({ error: 'Comentario no encontrado' });
         }
 
-        await Comments.update({
-            comment_text,
-            user_id,
-            movie_id,
-            series_id,
-        }, {
-            where: { comment_id: id }
-        });
+        // Actualizar el comentario con los nuevos valores
+        comment.comment_text = comment_text;
+        comment.user_id = user_id;
+        comment.movie_id = movie_id;
+        comment.series_id = series_id;
+
+        // Guardar los cambios en la base de datos
+        await comment.save();
 
         res.json({ message: 'Comentario actualizado correctamente' });
     } catch (error) {
@@ -84,14 +84,13 @@ const deleteComment = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const comment = await Comments.findByPk(id);
+        const comment = await Comment.findByPk(id);
         if (!comment) {
             return res.status(404).json({ error: 'Comentario no encontrado' });
         }
 
-        await Comments.destroy({
-            where: { comment_id: id }
-        });
+        // Eliminar el comentario de la base de datos
+        await comment.destroy();
 
         res.json({ message: 'Comentario eliminado correctamente' });
     } catch (error) {
