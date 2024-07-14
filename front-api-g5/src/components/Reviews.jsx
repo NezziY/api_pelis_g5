@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CommentForm from '../components/CommentForm'; 
+import { toast, Toaster } from 'react-hot-toast';
 
 const Reviews = ({ movieId, seriesId, userId, type }) => {
   const [reviews, setReviews] = useState([]);
@@ -14,8 +15,8 @@ const Reviews = ({ movieId, seriesId, userId, type }) => {
     try {
       const response = await axios.get('http://localhost:3030/api/comments', {
         params: {
-          movie_id: movieId,
-          series_id: seriesId,
+          movie_id: type === 'movie' ? movieId : null,
+          series_id: type === 'series' ? seriesId : null,
         },
       });
       setReviews(response.data);
@@ -23,28 +24,38 @@ const Reviews = ({ movieId, seriesId, userId, type }) => {
       console.error('Error fetching reviews:', error);
     }
   };
-
   const handleAddReview = async (reviewText) => {
     try {
-      await axios.post('http://localhost:3030/api/comments', {
+      const payload = {
         comment_text: reviewText,
         user_id: userId,
-        movie_id: type === 'movie' ? movieId : null,
-        series_id: type === 'series' ? seriesId : null,
-        comment_type: type,
-      });
+        comment_type: type, // 'movie' or 'series'
+      };
+  
+      if (type === 'movie') {
+        payload.movie_id = movieId;
+      } else if (type === 'series') {
+        payload.series_id = seriesId;
+      }
+  
+      await axios.post('http://localhost:3030/api/comments', payload);
       fetchReviews();
+      toast.success('Comentario añadido exitosamente');
     } catch (error) {
       console.error('Error adding review:', error);
+      toast.error('Error al añadir comentario');
     }
   };
+  
 
   const handleDeleteReview = async (commentId) => {
     try {
       await axios.delete(`http://localhost:3030/api/comments/${commentId}`);
       fetchReviews();
+      toast.success('Comentario eliminado exitosamente');
     } catch (error) {
       console.error('Error deleting review:', error);
+      toast.error('Error al eliminar comentario');
     }
   };
 
@@ -63,13 +74,16 @@ const Reviews = ({ movieId, seriesId, userId, type }) => {
       });
       fetchReviews();
       setEditingComment(null); // Clear editing state after update
+      toast.success('Comentario actualizado exitosamente');
     } catch (error) {
       console.error('Error updating review:', error);
+      toast.error('Error al actualizar comentario');
     }
   };
 
   return (
     <div className='my-8'>
+      <Toaster />
       <h3 className='text-3xl font-extrabold'>Reviews</h3>
       <ul className="space-y-4">
         {reviews.map(review => (
@@ -96,10 +110,10 @@ const Reviews = ({ movieId, seriesId, userId, type }) => {
         userId={userId} 
         type={type} 
         onAddReview={handleAddReview} 
+        onUpdateReview={handleUpdateReview}
         editComment={!!editingComment} 
         commentId={editingComment?.comment_id} 
         initialText={editingComment?.comment_text}
-        onUpdateReview={handleUpdateReview} // Pass the update handler to the form
       />
       {editingComment && (
         <button 

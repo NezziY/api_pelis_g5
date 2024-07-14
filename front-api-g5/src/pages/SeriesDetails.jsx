@@ -61,7 +61,7 @@ const SeriesDetails = () => {
       <p>{series.description}</p>
 
       {/* Pasar userId y series.id a Reviews */}
-      <Reviews seriesId={series.id} userId={userId} />
+      <Reviews seriesId={series.id}  userId={userId} />
     </div>
   );
 };
