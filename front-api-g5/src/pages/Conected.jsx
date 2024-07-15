@@ -15,7 +15,11 @@ function Conected() {
       }
     }
   }, []);
-
+  //funcion para cerrar la sesión y borrar el sesion storage
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    window.location.href = "/cuenta";
+  };
   return (
     <div className="ml-auto mr-auto mt-7 w-96 rounded-lg shadow-lg p-5 bg-gray-800 text-white">
       <h2 className="text-2xl font-bold pb-5">Usuario Conectado</h2>
@@ -26,8 +30,16 @@ function Conected() {
           {/* Otros datos del usuario si es necesario */}
         </div>
       ) : (
+        //boton para cerrar la sesión y limpiar el localstorage
+
         <p>Cargando datos de usuario...</p>
       )}
+      <button
+        onClick={handleLogout}
+        className="mt-10 text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full"
+      >
+        Cerrar Sesión
+      </button>
     </div>
   );
 }
